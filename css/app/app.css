@@ -132,7 +132,7 @@ ul#list {
     font-size: 1.25rem;
     float: right;
     /* content: url("http://www.danielmdesigns.com/app/symplist/imgs/list/checkbox.png"); */
-    content: url("/app/symplist/imgs/list/checkbox.png");
+    content: url("../imgs/list/checkbox.png");
     color: #ddd
 }
 
