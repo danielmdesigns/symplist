@@ -282,6 +282,14 @@ ul#list {
     border-bottom-color: var(--text)
 }
 
+.tabs__new {
+    display: flex;
+    margin-right: -.5rem;
+    padding: .5rem;
+    color: var(--text-muted);
+    transition: color var(--speed)
+}
+
 
 /* DIALOG */
 .modal:before {
@@ -476,7 +484,8 @@ button {
         opacity: .9
     }
 
-    .tabs__list button:hover {
+    .tabs__list button:hover,
+    .tabs__new:hover {
         color: var(--text)
     }
 }

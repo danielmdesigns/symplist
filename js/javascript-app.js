@@ -80,7 +80,8 @@ $("#js-add").on("click", function(event){
 	openDialog("item", "Add item", "Item name", "");
 });
 
-$("#js-new-list").on("click", function(){
+//NEW LIST: FROM THE MENU, OR THE + AT THE END OF THE TABS
+$("#js-new-list, .tabs__new").on("click", function(){
 	openDialog("new-list", "New list", "List name", "");
 });
 
