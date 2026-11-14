@@ -35,7 +35,7 @@ function unloadPage(){
 //***** LIST LOGIC && BROWSER STORAGE *****//
 		
 //SHOW PROMPT WHEN ON FAB TAP/CLICK
-$("#js-fab").on("click", function(event){
+$("#js-add").on("click", function(event){
   var $input = $("input");
   $input.val("");
   $(".modal__title").html("Please add your item");
@@ -104,6 +104,7 @@ $("ul").on("click", "li", function(){
 	localStorage.setItem('list', newList);
 	
 	//CHECK FOR EMPTY LIST
+	$(".emptyState").text("You’re all caught up.");
 	emptyState();
 		
 });

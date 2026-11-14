@@ -108,7 +108,7 @@ nav .close {
 
 /* LIST */
 ul#list {
-    margin: 0 1.25rem
+    margin: 0 1.25rem 6rem
 }
 
 #list li {
@@ -130,55 +130,48 @@ ul#list {
     width: 1rem;
     height: 1rem;
     background-color: var(--text-muted);
-    -webkit-mask: url("../../imgs/icons/minus.svg") center / contain no-repeat;
-    mask: url("../../imgs/icons/minus.svg") center / contain no-repeat
+    -webkit-mask: url("../../imgs/icons/check.svg") center / contain no-repeat;
+    mask: url("../../imgs/icons/check.svg") center / contain no-repeat
 }
 
-form>.emptyState {
-    margin: 3.125rem auto;
-    text-align: center
+.emptyState {
+    margin: 5rem 1.25rem 0;
+    font-size: 1.125rem;
+    text-align: center;
+    color: var(--text)
 }
 
-form>.emptyState img {
-    width: 100%;
-    max-width: 237px;
-    margin-bottom: .625rem;
-    text-align: center
-}
-
-.fab {
-    font-size: 1.875rem;
-    font-weight: 400;
-    line-height: normal;
+/* ADD ITEM */
+.toolbar {
     position: fixed;
-    z-index: 1;
-    right: .9375rem;
-    bottom: .9375rem;
-    overflow: hidden;
-    width: 56px;
-    min-width: 56px;
-    height: 56px;
-    margin: auto;
-    padding: 0;
-    cursor: pointer;
-    transition: background-color .35s ease, transform .35s ease;
-    color: #fff;
-    background-color: #87DB48;
-    border-radius: 50%;
-    box-shadow: 0 0 1.25rem rgba(0, 0, 0, 0.2)
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem 1.25rem 1.25rem;
+    background-color: var(--bg)
 }
 
-.fab .icon_fab {
-    display: block;
-    margin-top: -4px
+.add-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    float: none;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.125rem;
+    color: var(--bg);
+    background-color: var(--text);
+    border-radius: .5rem
 }
 
-.fab:hover {
-    background-color: #79d733
+.add-item:hover {
+    background-color: var(--text);
+    opacity: .9
 }
 
-.fab:active {
-    transform: scale(.9)
+.add-item:active {
+    transform: scale(.98)
 }
 
 .modal:before {

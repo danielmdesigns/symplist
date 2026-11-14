@@ -16,7 +16,7 @@
 <meta name="description" content="Symplist is a dead-simple way to stay on top of your tasks. Making it perfect for busy people.">
     
 <!-- Stylesheets -->
-<link rel="stylesheet" href="css/app/app.css?cv=2026.3">
+<link rel="stylesheet" href="css/app/app.css?cv=2026.4">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
     
 <!-- Favicons -->
@@ -73,15 +73,15 @@
 </header>
 
 <form id="form" class="blur" action="#">
-  <div class="emptyState">
-		<img src="imgs/states/empty_state.png?cv=0320" alt="You're all caught up!"/>
-  </div>
+  <p class="emptyState">Nothing on your list yet.</p>
   <ul id="list"></ul>
 </form>
 
-<button id="js-fab" class="fab blur">
-	<span class="icon_fab">+</span>
-</button>
+<footer class="toolbar blur">
+  <button id="js-add" class="add-item">
+    <svg width="20" height="20" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg>Add item
+  </button>
+</footer>
 
 <!-- Add Item -->
 <div id="js-modal" class="modal is-hidden">
@@ -102,6 +102,6 @@
 
 <!-- Javascript Support -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="js/javascript-app.js?cv=2026.3"></script>
+<script src="js/javascript-app.js?cv=2026.4"></script>
 </body>
 </html>
