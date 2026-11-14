@@ -3,6 +3,7 @@ $(document).ready(function(){
 
 //HIDE PROMPTS ONLOAD
 $("#js-modal").hide();
+$("#js-undo").hide();
 	
 //REMOVE SHADOW & SHOW GRAPHIC IF LIST IS EMPTY
 function emptyState(){
@@ -82,6 +83,7 @@ $("ul").on("click", "li", function(){
 	if($("nav").hasClass("open")){
 		return;
 	}
+	var index = $(this).index();
 	$(this).remove();
 	var i = $(this).text();
 
@@ -97,9 +99,44 @@ $("ul").on("click", "li", function(){
 	//CHECK FOR EMPTY LIST
 	$(".emptyState").text("You’re all caught up.");
 	emptyState();
-		
+
+	showUndo($(this), index);
+});
+
+//***** UNDO *****//
+var removed, undoTimer;
+
+//SHOW "ITEM REMOVED · UNDO" FOR 5s
+function showUndo(item, index){
+	removed = { item: item, index: index };
+	$(".undo__text").text(item.text() + " removed");
+	$("#js-undo").show();
+	clearTimeout(undoTimer);
+	undoTimer = setTimeout(function(){
+		$("#js-undo").hide();
+	}, 5000);
+}
+
+//PUT THE ITEM BACK WHERE IT WAS
+$(".undo__btn").on("click", function(){
+	if(removed.index === 0){
+		$("#list").prepend(removed.item);
+	}else{
+		$("#list li").eq(removed.index - 1).after(removed.item);
+	}
+	localStorage.setItem('list', $('#list').html());
+	emptyState();
+	clearTimeout(undoTimer);
+	$("#js-undo").hide();
 });
 		
+//***** DARK MODE *****//
+$("#js-theme").on("click", function(){
+	var theme = $("html").attr("data-theme") === "dark" ? "light" : "dark";
+	$("html").attr("data-theme", theme);
+	localStorage.setItem("theme", theme);
+});
+
 //***** MENU *****//
 $(".nav-toggle").on("click", function(event){
 	event.stopPropagation();
