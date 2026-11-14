@@ -1,3 +1,24 @@
+/* COLORS */
+:root {
+    --bg: #FDFDFD;
+    --surface: #FDFDFD;
+    --text: #262626;
+    --text-muted: #737373;
+    --line: #E5E5E5;
+    --hover: #F5F5F5;
+    --scrim: rgba(38, 38, 38, 0.4)
+}
+
+/* DARK MODE (values only, toggle comes later)
+    --bg: #262626;
+    --surface: #363636;
+    --text: #FDFDFD;
+    --text-muted: #A3A3A3;
+    --line: #404040;
+    --hover: #363636;
+    --scrim: rgba(0, 0, 0, 0.5)
+*/
+
 * {
     margin: 0;
     padding: 0;
@@ -6,9 +27,10 @@
 }
 
 body {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: 100;
-    background-color: #FAFAFA
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+    font-weight: 400;
+    color: var(--text);
+    background-color: var(--bg)
 }
 
 header {
@@ -37,7 +59,7 @@ header a {
 nav {
     display: block;
     opacity: 1;
-    font-weight: 300;
+    font-weight: 400;
     position: fixed;
     z-index: 10;
     top: 0;
@@ -114,7 +136,7 @@ ul#list {
 
 #list li {
     font-size: .9375rem;
-    font-weight: 300;
+    font-weight: 400;
     display: block;
     overflow: hidden;
     padding: 1rem;
@@ -150,7 +172,7 @@ form>.emptyState img {
 
 .fab {
     font-size: 1.875rem;
-    font-weight: 100;
+    font-weight: 400;
     line-height: normal;
     position: fixed;
     z-index: 1;
@@ -217,14 +239,14 @@ form>.emptyState img {
 
 .modal__title {
     font-size: 1.5rem;
-    font-weight: 300;
+    font-weight: 400;
     padding: 1.25rem;
     color: #444
 }
 
 button {
     font-size: .875rem;
-    font-weight: 100;
+    font-weight: 400;
     float: right;
     padding: .9375rem;
     cursor: pointer;
@@ -238,7 +260,7 @@ button:hover {
 }
 
 button.btn-add {
-    font-weight: 700;
+    font-weight: 600;
     color: #87DB48
 }
 
@@ -323,7 +345,7 @@ main>.hero {
 h1,
 p {
     color: #95989A;
-    font-weight: 300;
+    font-weight: 400;
     text-align: center
 }
 
@@ -348,7 +370,7 @@ p {
 
 .btn-primary {
     padding: .9375rem 0;
-    font-weight: 700;
+    font-weight: 600;
     font-size: .875rem;
     margin: 0 auto;
     color: #fff;
@@ -376,7 +398,7 @@ p {
 
 .btn-link {
     color: #87DB48;
-    font-weight: 300;
+    font-weight: 400;
     margin: 1.5rem auto
 }
 
@@ -412,4 +434,3 @@ p {
     }
 }
 
-/*# sourceMappingURL=app.css.map */
