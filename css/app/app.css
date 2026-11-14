@@ -106,8 +106,10 @@ nav.open {
     display: block
 }
 
-nav a {
+nav a,
+nav button {
     display: flex;
+    width: 100%;
     align-items: center;
     gap: .375rem;
     padding: .625rem 1.25rem;
@@ -115,9 +117,15 @@ nav a {
     color: var(--text)
 }
 
+nav hr {
+    margin: .5rem 1.25rem;
+    border: none;
+    border-top: 1px solid var(--line)
+}
+
 /* LIST */
 ul#list {
-    margin: 0 1.25rem 6rem
+    margin: 0 1.25rem 10rem
 }
 
 #list li {
@@ -208,6 +216,52 @@ ul#list {
 
 .add-item:active {
     transform: scale(.98)
+}
+
+/* TABS */
+.tabs {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: .75rem
+}
+
+.tabs__list {
+    display: flex;
+    flex: 1;
+    gap: 2rem;
+    overflow-x: auto;
+    scrollbar-width: none
+}
+
+.tabs__list::-webkit-scrollbar {
+    display: none
+}
+
+.tabs__list button {
+    flex: none;
+    max-width: 12rem;
+    padding: .75rem 0 .5rem;
+    overflow: hidden;
+    font-size: .75rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent
+}
+
+.tabs__list button.is-active {
+    color: var(--text);
+    border-bottom-color: var(--text)
+}
+
+.tabs__new {
+    display: flex;
+    padding: .5rem;
+    margin-right: -.5rem;
+    color: var(--text-muted)
 }
 
 /* DIALOG */
@@ -387,7 +441,8 @@ button {
 
 /* HOVER (DESKTOP ONLY, SO TAPS DON'T LEAVE STICKY STATES ON PHONES) */
 @media (hover: hover) {
-    nav a:hover {
+    nav a:hover,
+    nav button:hover {
         background-color: var(--hover)
     }
 
@@ -397,5 +452,10 @@ button {
 
     .add-item:hover {
         opacity: .9
+    }
+
+    .tabs__list button:hover,
+    .tabs__new:hover {
+        color: var(--text)
     }
 }

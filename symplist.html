@@ -12,7 +12,7 @@
 <meta name="description" content="Symplist is a dead-simple way to stay on top of your tasks. Making it perfect for busy people.">
 
 <!-- Stylesheets -->
-<link rel="stylesheet" href="css/app/app.css?cv=2026.11">
+<link rel="stylesheet" href="css/app/app.css?cv=2026.12">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
 
 <!-- Icons -->
@@ -40,6 +40,9 @@ document.documentElement.dataset.theme = localStorage.getItem("theme") || (match
     <svg width="24" height="24" viewBox="0 0 256 256" fill="currentColor"><path d="M144,128a16,16,0,1,1-16-16A16,16,0,0,1,144,128ZM60,112a16,16,0,1,0,16,16A16,16,0,0,0,60,112Zm136,0a16,16,0,1,0,16,16A16,16,0,0,0,196,112Z"/></svg>
   </button>
   <nav role="navigation">
+    <button id="js-rename">Edit list name</button>
+    <button id="js-delete">Delete list</button>
+    <hr>
     <a href="help.html">Help &amp; info</a>
     <a href="https://danielmdesigns.github.io/symplist/" target="_blank">Homepage <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"/></svg></a>
     <a href="https://danielmdesigns.com/" target="_blank">Developer <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"/></svg></a>
@@ -59,6 +62,12 @@ document.documentElement.dataset.theme = localStorage.getItem("theme") || (match
   <button id="js-add" class="add-item">
     <svg width="20" height="20" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg>Add item
   </button>
+  <div class="tabs">
+    <div id="js-tabs" class="tabs__list"></div>
+    <button id="js-new-list" class="tabs__new" aria-label="New list">
+      <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg>
+    </button>
+  </div>
 </footer>
 
 <!-- Add Item -->
@@ -75,6 +84,6 @@ document.documentElement.dataset.theme = localStorage.getItem("theme") || (match
 
 <!-- Javascript Support -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="js/javascript-app.js?cv=2026.11"></script>
+<script src="js/javascript-app.js?cv=2026.12"></script>
 </body>
 </html>
