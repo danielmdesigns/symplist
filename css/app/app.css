@@ -175,10 +175,6 @@ ul#list {
     text-overflow: ellipsis
 }
 
-.undo__text::first-letter {
-    text-transform: uppercase
-}
-
 .undo__btn {
     text-decoration: underline;
     text-underline-offset: .25rem
