@@ -12,13 +12,13 @@
 
 /* DARK MODE */
 :root[data-theme="dark"] {
-    --bg: #262626;
-    --surface: #363636;
+    --bg: #121212;
+    --surface: #262626;
     --text: #FDFDFD;
     --text-muted: #A3A3A3;
-    --line: #404040;
-    --hover: #363636;
-    --scrim: rgba(0, 0, 0, 0.5);
+    --line: #363636;
+    --hover: #262626;
+    --scrim: rgba(0, 0, 0, 0.6);
     color-scheme: dark
 }
 
