@@ -35,6 +35,7 @@ body {
 
 /* HEADER */
 header {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -63,46 +64,34 @@ header {
 
 /* MENU */
 nav {
-    position: fixed;
+    display: none;
+    position: absolute;
     z-index: 10;
-    top: 0;
-    right: 0;
-    width: 75%;
-    max-width: 20rem;
-    height: 100%;
-    transition: transform .35s ease;
-    transform: translateX(100%);
-    border-left: 1px solid var(--line);
-    background: var(--surface)
+    top: 4rem;
+    right: 1.25rem;
+    min-width: 12rem;
+    padding: .5rem 0;
+    border: 1px solid var(--line);
+    border-radius: .75rem;
+    background-color: var(--surface);
+    box-shadow: 0 .5rem 1.5rem rgba(38, 38, 38, .12)
 }
 
 nav.open {
-    overflow: auto;
-    transform: translateX(0)
-}
-
-nav ol {
-    margin-top: 4.5rem
+    display: block
 }
 
 nav a {
-    display: block;
-    padding: 1rem 1.25rem;
-    font-size: 1.125rem;
-    color: var(--text);
-    border-bottom: 1px solid var(--line)
+    display: flex;
+    align-items: center;
+    gap: .375rem;
+    padding: .625rem 1.25rem;
+    font-size: 1rem;
+    color: var(--text)
 }
 
 nav a:hover {
-    background: var(--hover)
-}
-
-nav .close {
-    position: absolute;
-    top: 1rem;
-    right: 1.25rem;
-    font-size: 1.75rem;
-    line-height: 1
+    background-color: var(--hover)
 }
 
 /* LIST */
@@ -259,23 +248,6 @@ button {
     background: none
 }
 
-.ath {
-    display: block;
-    position: fixed;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    text-align: center;
-    color: #fff;
-    background: linear-gradient(#87DB48, #5CA724)
-}
-
-.ath img {
-    margin-top: 12rem
-}
-
 .is-hidden {
     opacity: 0
 }
@@ -284,115 +256,80 @@ button {
     display: block
 }
 
-main {
-    position: relative;
-    z-index: 1;
-    margin: .9375rem;
-    padding: 1px;
-    border-radius: 5px
-}
-
-@media(min-width: 450px) {
-    main {
-        max-width: 600px;
-        margin: .9375rem auto
-    }
-}
-
-main>.hero {
-    margin: 1rem auto;
-    text-align: center
-}
-
-h1,
-p {
-    color: #95989A;
-    font-weight: 400;
-    text-align: center
-}
-
-h1 {
-    margin: 0;
-    font-size: 26px;
-    line-height: 39px
-}
-
-p {
-    margin: .875rem 0 1.5rem 0;
+/* HELP & INFO */
+.back {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: 1.5rem 1.25rem .5rem;
     font-size: 1rem;
-    line-height: 1.5rem
+    color: var(--text)
 }
 
-.btn {
-    display: block;
-    float: none;
-    text-align: center;
-    text-decoration: none
+.help {
+    margin: 0 1.25rem 3rem
 }
 
-.btn-primary {
-    padding: .9375rem 0;
-    font-weight: 600;
-    font-size: .875rem;
-    margin: 0 auto;
-    color: #fff;
-    background-color: #87DB48;
-    border-radius: 4px;
-    width: 100%;
-    box-shadow: 0 0 1.25rem rgba(0, 0, 0, 0.2);
-    transition: background-color .35s ease, transform .35s ease
-}
-
-@media(min-width: 450px) {
-    .btn-primary {
-        width: 100%;
-        max-width: 250px
-    }
-}
-
-.btn-primary:hover {
-    background-color: #79d733
-}
-
-.btn-primary:active {
-    transform: scale(.9)
-}
-
-.btn-link {
-    color: #87DB48;
+.help h1 {
+    margin: 1.5rem 0 .5rem;
+    font-size: 2rem;
     font-weight: 400;
-    margin: 1.5rem auto
+    letter-spacing: -.02em
 }
 
-.bull-list {
-    margin-bottom: 1.875rem
+.help section {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--line)
 }
 
-.bull-list p {
-    display: block;
-    text-align: left
+.help section:last-child {
+    border-bottom: none
 }
 
-.bull-list__title,
-.bull-list__item {
-    margin: 0 !important
+.help h2 {
+    margin-bottom: .5rem;
+    font-size: 1.375rem;
+    font-weight: 400
 }
 
-.bull-list__item {
-    padding-left: .625rem
+.help p {
+    margin-bottom: 1rem;
+    line-height: 1.5
 }
 
-.statusbar {
-    padding: 0;
-    margin-bottom: 2px;
-    background-color: #87DB48
+.help section > a {
+    text-decoration: underline;
+    text-underline-offset: .25rem;
+    color: var(--text)
 }
 
-@media(orientation:landscape) {
-    .statusbar {
-        padding: 0;
-        margin-bottom: 2px;
-        background-color: #87DB48
-    }
+.help details {
+    border-bottom: 1px solid var(--line)
 }
 
+.help summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    font-size: 1.125rem;
+    cursor: pointer;
+    list-style: none
+}
+
+.help summary::-webkit-details-marker {
+    display: none
+}
+
+.help details[open] summary svg {
+    transform: rotate(180deg)
+}
+
+.help ol {
+    padding: 0 0 1rem 1.25rem
+}
+
+.help ol li {
+    list-style: decimal;
+    line-height: 1.6
+}

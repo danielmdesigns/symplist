@@ -78,6 +78,10 @@ if(localStorage.getItem('list')){
     
 //REMOVE LIST ITEM
 $("ul").on("click", "li", function(){
+	//IF THE MENU IS OPEN, THIS TAP ONLY CLOSES IT
+	if($("nav").hasClass("open")){
+		return;
+	}
 	$(this).remove();
 	var i = $(this).text();
 
@@ -96,30 +100,15 @@ $("ul").on("click", "li", function(){
 		
 });
 		
-//***** NAVIGATION MENU *****//
-$(function(){
-	$('.nav-toggle, nav a').on('click',function(){
-		var nav = $('nav');
-		nav.toggleClass('open');
-		if(nav.hasClass("open")){
-			nav.css("display","block").removeClass("is-hidden");
-		}
-	});
+//***** MENU *****//
+$(".nav-toggle").on("click", function(event){
+	event.stopPropagation();
+	$("nav").toggleClass("open");
 });
-	
-//***** ADD TO HOMESCREEN *****//
-$("#js-ath").hide();
-	
-//IF VIEWING IN APP MODE
-if(window.navigator.standalone === false){
-	//SHOW ATH MESSAGE EVERY 30s
-	setTimeout(function(){
-		$("#js-ath").show();
-	}, 30000); //30s
-}
 
-$("#js-ath").on("click", function(){
-	$("#js-ath").hide();
+//CLOSE MENU ON ANY OTHER TAP/CLICK
+$(document).on("click", function(){
+	$("nav").removeClass("open");
 });
 
 });
