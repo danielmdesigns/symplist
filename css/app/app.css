@@ -7,7 +7,10 @@
     --line: #E5E5E5;
     --hover: #F5F5F5;
     --scrim: rgba(38, 38, 38, 0.4);
-    --column: 48rem
+    --danger: #C4271C;
+    --column: 48rem;
+    --speed: 200ms;
+    --ease: cubic-bezier(.2, .8, .2, 1)
 }
 
 /* DARK MODE */
@@ -19,6 +22,7 @@
     --line: #363636;
     --hover: #363636;
     --scrim: rgba(0, 0, 0, 0.6);
+    --danger: #FF8A80;
     color-scheme: dark
 }
 
@@ -89,7 +93,10 @@ header {
 
 /* MENU */
 nav {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-.25rem);
+    transition: opacity var(--speed) var(--ease), transform var(--speed) var(--ease), visibility var(--speed);
     position: absolute;
     z-index: 10;
     top: 4rem;
@@ -103,7 +110,13 @@ nav {
 }
 
 nav.open {
-    display: block
+    visibility: visible;
+    opacity: 1;
+    transform: none
+}
+
+nav .danger {
+    color: var(--danger)
 }
 
 nav a,
@@ -148,8 +161,13 @@ ul#list {
     width: 1rem;
     height: 1rem;
     background-color: var(--text-muted);
+    transition: background-color var(--speed);
     -webkit-mask: url("../../imgs/icons/check.svg") center / contain no-repeat;
     mask: url("../../imgs/icons/check.svg") center / contain no-repeat
+}
+
+#list li.is-new {
+    animation: rise var(--speed) var(--ease)
 }
 
 .emptyState {
@@ -175,7 +193,8 @@ ul#list {
     border: 1px solid var(--line);
     border-radius: .5rem;
     background-color: var(--surface);
-    box-shadow: 0 .5rem 1.5rem rgba(38, 38, 38, .12)
+    box-shadow: 0 .5rem 1.5rem rgba(38, 38, 38, .12);
+    animation: rise var(--speed) var(--ease)
 }
 
 .undo__text {
@@ -215,6 +234,10 @@ ul#list {
     border-radius: .5rem
 }
 
+.add-item {
+    transition: opacity var(--speed), transform var(--speed)
+}
+
 .add-item:active {
     transform: scale(.98)
 }
@@ -250,7 +273,8 @@ ul#list {
     white-space: nowrap;
     text-overflow: ellipsis;
     color: var(--text-muted);
-    border-bottom: 2px solid transparent
+    border-bottom: 2px solid transparent;
+    transition: color var(--speed), border-color var(--speed)
 }
 
 .tabs__list button.is-active {
@@ -258,12 +282,6 @@ ul#list {
     border-bottom-color: var(--text)
 }
 
-.tabs__new {
-    display: flex;
-    padding: .5rem;
-    margin-right: -.5rem;
-    color: var(--text-muted)
-}
 
 /* DIALOG */
 .modal:before {
@@ -287,7 +305,8 @@ ul#list {
     margin: 0 auto;
     padding: 1.5rem;
     border-radius: .75rem;
-    background-color: var(--surface)
+    background-color: var(--surface);
+    animation: pop var(--speed) var(--ease)
 }
 
 .modal__title {
@@ -296,6 +315,12 @@ ul#list {
     font-weight: 600;
     text-align: center;
     color: var(--text)
+}
+
+.modal__text {
+    margin-top: -.5rem;
+    text-align: center;
+    color: var(--text-muted)
 }
 
 .modal input {
@@ -339,6 +364,10 @@ ul#list {
     background-color: var(--text)
 }
 
+.btn-danger {
+    background-color: var(--danger)
+}
+
 input:placeholder-shown ~ .modal__actions .btn-add {
     opacity: .4;
     pointer-events: none
@@ -351,14 +380,6 @@ button {
     cursor: pointer;
     border: none;
     background: none
-}
-
-.is-hidden {
-    opacity: 0
-}
-
-.is-visible {
-    display: block
 }
 
 /* HELP & INFO */
@@ -455,8 +476,27 @@ button {
         opacity: .9
     }
 
-    .tabs__list button:hover,
-    .tabs__new:hover {
+    .tabs__list button:hover {
         color: var(--text)
+    }
+}
+
+/* MOTION */
+@keyframes rise {
+    from { opacity: 0; transform: translateY(.5rem) }
+}
+
+@keyframes pop {
+    from { opacity: 0; transform: scale(.96) }
+}
+
+/* NO MOTION IF THE DEVICE ASKS FOR REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+        transition: none !important
     }
 }

@@ -2,21 +2,24 @@ $(document).ready(function(){
 "use strict";
 
 //HIDE PROMPTS ONLOAD
-$("#js-modal").hide();
-$("#js-undo").hide();
+$("#js-modal, #js-confirm, #js-undo").hide();
+
+//ANIMATION SPEED (MATCHES --speed IN app.css), OFF IF THE DEVICE ASKS FOR REDUCED MOTION
+var speed = 200;
+$.fx.off = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 //***** BROWSER STORAGE *****//
 
-//LISTS ARE SAVED AS [{ name: "Groceries", items: ["apples", "honey"] }]
+//LISTS ARE SAVED AS [{ name: "My list", items: ["apples", "honey"] }]
 var lists = JSON.parse(localStorage.getItem("lists"));
 var current = Number(localStorage.getItem("current")) || 0;
 
-//FIRST VISIT AFTER THE UPDATE: MOVE THE ORIGINAL LIST INTO "GROCERIES"
+//FIRST VISIT AFTER THE UPDATE: MOVE THE ORIGINAL LIST INTO "MY LIST"
 if(!lists){
 	var oldItems = $("<ul>" + (localStorage.getItem("list") || "") + "</ul>").children().map(function(){
 		return $(this).text();
 	}).get();
-	lists = [{ name: "Groceries", items: oldItems }];
+	lists = [{ name: "My list", items: oldItems }];
 }
 if(current >= lists.length){
 	current = 0;
@@ -38,10 +41,10 @@ function render(){
 	$.each(lists, function(i, list){
 		$("<button>").text(list.name).toggleClass("is-active", i === current).appendTo("#js-tabs");
 	});
-	$("#js-tabs .is-active")[0].scrollIntoView({ block: "nearest", inline: "nearest" });
 
-	//ONLY OFFER DELETE WHEN THERE'S MORE THAN ONE LIST
-	$("#js-delete").toggle(lists.length > 1);
+	//TABS, EDIT AND DELETE ONLY SHOW ONCE THERE'S MORE THAN ONE LIST
+	$(".tabs, #js-rename, #js-delete").toggle(lists.length > 1);
+	$("#js-tabs .is-active")[0].scrollIntoView({ block: "nearest", inline: "nearest" });
 
 	$(".emptyState").text("Nothing on your list yet.");
 	emptyState();
@@ -49,8 +52,8 @@ function render(){
 
 //SHOW MESSAGE IF LIST IS EMPTY
 function emptyState(){
-	if($("#list li").length === 0){
-		$(".emptyState").show();
+	if($("#list li").not(".is-removing").length === 0){
+		$(".emptyState").fadeIn(speed);
 	}else{
 		$(".emptyState").hide();
 	}
@@ -65,11 +68,10 @@ var mode;
 function openDialog(newMode, title, placeholder, value){
 	$("nav").removeClass("open");
 	mode = newMode;
-	$(".modal__title").text(title);
+	$("#js-modal .modal__title").text(title);
 	$("#js-modal input").attr("placeholder", placeholder).val(value);
 	$("#btnAdd").text(newMode === "rename" ? "Save" : "Add");
-	$(".modal").removeClass("is-hidden");
-	$("#js-modal").show();
+	$("#js-modal").fadeIn(speed);
 	$("#js-modal input").focus();
 }
 
@@ -78,8 +80,7 @@ $("#js-add").on("click", function(event){
 	openDialog("item", "Add item", "Item name", "");
 });
 
-$("#js-new-list").on("click", function(event){
-	event.stopPropagation();
+$("#js-new-list").on("click", function(){
 	openDialog("new-list", "New list", "List name", "");
 });
 
@@ -89,14 +90,14 @@ $("#js-rename").on("click", function(){
 
 //HIDE PROMPT IF USER CANCELS
 $("#btnCancel").on("click", function(){
-	$("#js-modal").hide();
+	$("#js-modal").fadeOut(speed);
 });
 
 //SAVE WHAT WAS TYPED
 $("#btnAdd").on("click", function(){
 	var value = $.trim($("#js-modal input").val());
 	if(value === ""){
-		$(".modal__title").text(mode === "item" ? "Please type an item" : "Please type a list name");
+		$("#js-modal .modal__title").text(mode === "item" ? "Please type an item" : "Please type a list name");
 		return;
 	}
 	if(mode === "item"){
@@ -111,7 +112,10 @@ $("#btnAdd").on("click", function(){
 	}
 	save();
 	render();
-	$("#js-modal").hide();
+	if(mode === "item"){
+		$("#list li").last().addClass("is-new");
+	}
+	$("#js-modal").fadeOut(speed);
 });
 
 //SUBMIT ON ENTER KEYPRESS
@@ -124,14 +128,18 @@ $("#js-modal input").on("keypress", function(e){
 
 //***** REMOVE LIST ITEM *****//
 $("#list").on("click", "li", function(){
-	//IF THE MENU IS OPEN, THIS TAP ONLY CLOSES IT
-	if($("nav").hasClass("open")){
+	//IF THE MENU IS OPEN, THIS TAP ONLY CLOSES IT. IGNORE ROWS ALREADY ON THEIR WAY OUT
+	if($("nav").hasClass("open") || $(this).hasClass("is-removing")){
 		return;
 	}
-	var index = $(this).index();
+	var index = $("#list li").not(".is-removing").index(this);
 	var item = lists[current].items.splice(index, 1)[0];
 	save();
-	$(this).remove();
+
+	//FADE THE ROW OUT AND CLOSE THE GAP
+	$(this).addClass("is-removing").animate({ opacity: 0, height: 0, paddingTop: 0, paddingBottom: 0 }, speed, function(){
+		$(this).remove();
+	});
 
 	//CHECK FOR EMPTY LIST
 	$(".emptyState").text("You’re all caught up.");
@@ -147,14 +155,14 @@ var removed, undoTimer;
 function showUndo(item, index){
 	removed = { item: item, index: index, list: current };
 	$(".undo__text").text(item + " removed");
-	$("#js-undo").show();
+	$("#js-undo").stop(true, true).fadeIn(speed);
 	clearTimeout(undoTimer);
 	undoTimer = setTimeout(hideUndo, 5000);
 }
 
 function hideUndo(){
 	clearTimeout(undoTimer);
-	$("#js-undo").hide();
+	$("#js-undo").fadeOut(speed);
 }
 
 //PUT THE ITEM BACK WHERE IT WAS (EVEN IF ANOTHER TAB IS OPEN)
@@ -163,6 +171,7 @@ $(".undo__btn").on("click", function(){
 	current = removed.list;
 	save();
 	render();
+	$("#list li").eq(removed.index).addClass("is-new");
 	hideUndo();
 });
 
@@ -171,23 +180,40 @@ $("#js-tabs").on("click", "button", function(){
 	current = $(this).index();
 	save();
 	render();
+	$("#form").hide().fadeIn(speed);
 });
 
-//DELETE THE CURRENT LIST (ASKS FIRST)
+//***** DELETE LIST (ASKS FIRST) *****//
 $("#js-delete").on("click", function(){
-	if(confirm("Delete “" + lists[current].name + "”? Its items will be removed too.")){
-		lists.splice(current, 1);
-		current = Math.max(current - 1, 0);
-		save();
-		render();
-		hideUndo();
-	}
+	$("#js-confirm .modal__title").text("Delete “" + lists[current].name + "”?");
+	$("#js-confirm").fadeIn(speed);
+});
+
+$("#btnKeep").on("click", function(){
+	$("#js-confirm").fadeOut(speed);
+});
+
+$("#btnDelete").on("click", function(){
+	lists.splice(current, 1);
+	current = Math.max(current - 1, 0);
+	save();
+	render();
+	hideUndo();
+	$("#js-confirm").fadeOut(speed);
 });
 
 //***** DARK MODE *****//
 $("#js-theme").on("click", function(){
 	var theme = $("html").attr("data-theme") === "dark" ? "light" : "dark";
-	$("html").attr("data-theme", theme);
+	function apply(){
+		$("html").attr("data-theme", theme);
+	}
+	//CROSS-FADE THE WHOLE PAGE WHERE THE BROWSER SUPPORTS IT
+	if(document.startViewTransition && !$.fx.off){
+		document.startViewTransition(apply);
+	}else{
+		apply();
+	}
 	localStorage.setItem("theme", theme);
 });
 
