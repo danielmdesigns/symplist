@@ -17,7 +17,7 @@
     --text: #FDFDFD;
     --text-muted: #A3A3A3;
     --line: #363636;
-    --hover: #262626;
+    --hover: #363636;
     --scrim: rgba(0, 0, 0, 0.6);
     color-scheme: dark
 }
@@ -109,6 +109,7 @@ nav.open {
 nav a,
 nav button {
     display: flex;
+    box-sizing: border-box;
     width: 100%;
     align-items: center;
     gap: .375rem;
@@ -268,7 +269,7 @@ ul#list {
 .modal:before {
     content: "";
     position: fixed;
-    z-index: 1;
+    z-index: 20;
     top: 0;
     right: 0;
     bottom: 0;
@@ -278,7 +279,7 @@ ul#list {
 
 .modal__container {
     position: fixed;
-    z-index: 1;
+    z-index: 20;
     top: 6rem;
     right: 1.25rem;
     left: 1.25rem;

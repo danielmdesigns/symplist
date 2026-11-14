@@ -63,6 +63,7 @@ render();
 var mode;
 
 function openDialog(newMode, title, placeholder, value){
+	$("nav").removeClass("open");
 	mode = newMode;
 	$(".modal__title").text(title);
 	$("#js-modal input").attr("placeholder", placeholder).val(value);
