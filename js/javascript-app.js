@@ -16,16 +16,6 @@ function emptyState(){
 	}
 }
 
-//BLUR ELEMENTS IN BACKGROUND 
-function blur(){
-	var blurElements = $(".blur");
-	if($("#js-modal").is(":visible")){
-		blurElements.addClass("is-blur");
-	}else{
-		blurElements.removeClass("is-blur");
-	}
-}
-	
 //TEST FOR EMPTY STATE
 window.onunload = unloadPage;
 function unloadPage(){
@@ -38,26 +28,24 @@ function unloadPage(){
 $("#js-add").on("click", function(event){
   var $input = $("input");
   $input.val("");
-  $(".modal__title").html("Please add your item");
+  $(".modal__title").html("Add item");
   event.preventDefault();
   event.stopPropagation();
 	$(".modal").removeClass("is-hidden");
   $("#js-modal").show();
-  blur();
   $input.focus();
 });
 
 //HIDE PROMPT IF USER CANCELS
 $("#btnCancel").on("click", function(){
 	$("#js-modal").hide();
-	blur();
 });
 
 //SUBMIT TASK TO LIST ON FAB TAP/CLICK
 $("#btnAdd").on("click", function(){
 	var $item = $("input").val();
   if($item === ""){
-		$(".modal__title").html('Sorry, but your input can not be left blank.');
+		$(".modal__title").html("Please type an item");
   }else if($item === null){
 		return false;
   }else{
@@ -65,8 +53,7 @@ $("#btnAdd").on("click", function(){
 		emptyState();
 		$(".emptyState").hide();
 		$("#js-modal").hide();
-		blur();
-  }
+	  }
 	
   $("#form")[0].reset();
   var list = $('#list').html();
@@ -113,13 +100,9 @@ $("ul").on("click", "li", function(){
 $(function(){
 	$('.nav-toggle, nav a').on('click',function(){
 		var nav = $('nav');
-		var blurItems = $(".blur");
 		nav.toggleClass('open');
 		if(nav.hasClass("open")){
 			nav.css("display","block").removeClass("is-hidden");
-			blurItems.addClass("is-blur");
-		}else{
-			blurItems.removeClass("is-blur");
 		}
 	});
 });

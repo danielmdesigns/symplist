@@ -56,7 +56,6 @@ header {
 
 .nav-toggle {
     display: flex;
-    float: none;
     margin-right: -1rem;
     padding: .75rem;
     color: var(--text)
@@ -156,7 +155,6 @@ ul#list {
     align-items: center;
     justify-content: center;
     gap: .5rem;
-    float: none;
     width: 100%;
     padding: 1rem;
     font-size: 1.125rem;
@@ -166,7 +164,6 @@ ul#list {
 }
 
 .add-item:hover {
-    background-color: var(--text);
     opacity: .9
 }
 
@@ -174,92 +171,92 @@ ul#list {
     transform: scale(.98)
 }
 
+/* DIALOG */
 .modal:before {
     content: "";
     position: fixed;
     z-index: 1;
     top: 0;
-    left: 0;
-    bottom: 0;
     right: 0;
-    display: block;
-    background-color: rgba(0, 0, 0, 0.2)
-}
-
-.modal:closed {
-    display: none
+    bottom: 0;
+    left: 0;
+    background-color: var(--scrim)
 }
 
 .modal__container {
     position: fixed;
     z-index: 1;
-    top: 4rem;
-    left: .9375rem;
-    right: .9375rem;
-    display: block;
+    top: 6rem;
+    right: 1.25rem;
+    left: 1.25rem;
+    max-width: 24rem;
     margin: 0 auto;
-    padding: 1.25rem 2.5rem;
-    text-align: center;
-    border-radius: 4px;
-    background: #fff;
-    max-width: 500px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2)
+    padding: 1.5rem;
+    border-radius: .75rem;
+    background-color: var(--surface)
 }
 
 .modal__title {
-    font-size: 1.5rem;
-    font-weight: 400;
-    padding: 1.25rem;
-    color: #444
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--text)
 }
 
+.modal input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: .75rem 1rem;
+    font: inherit;
+    font-size: 1.125rem;
+    color: var(--text);
+    border: 1px solid var(--text-muted);
+    border-radius: .5rem;
+    outline: none;
+    background-color: var(--surface);
+    -webkit-appearance: none
+}
+
+.modal input:focus {
+    border-color: var(--text)
+}
+
+.modal input::placeholder {
+    color: var(--text-muted)
+}
+
+.modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: .5rem;
+    margin-top: 1.25rem
+}
+
+.btn-cancel,
+.btn-add {
+    padding: .625rem 1.25rem;
+    font-size: 1rem;
+    border-radius: .5rem
+}
+
+.btn-add {
+    color: var(--bg);
+    background-color: var(--text)
+}
+
+input:placeholder-shown ~ .modal__actions .btn-add {
+    opacity: .4;
+    pointer-events: none
+}
+
+/* BUTTONS */
 button {
-    font-size: .875rem;
-    font-weight: 400;
-    float: right;
-    padding: .9375rem;
+    font: inherit;
+    color: inherit;
     cursor: pointer;
     border: none;
-    outline: none;
-    background-color: transparent
-}
-
-button:hover {
-    background-color: transparent
-}
-
-button.btn-add {
-    font-weight: 600;
-    color: #87DB48
-}
-
-button.btn-cancel {
-    color: #ddd
-}
-
-input,
-input[type=text] {
-    width: 100%;
-    margin-bottom: .625rem;
-    padding: .625rem 0;
-    border: 1px solid #ddd;
-    -webkit-border-radius: none;
-    border-radius: 3px;
-    outline: none;
-    background-color: #fff;
-    -webkit-box-shadow: 0;
-    box-shadow: 0;
-    -webkit-appearance: none
-}
-
-input:focus,
-input[type=text]:focus {
-    border: 1px solid #ddd;
-    outline: none;
-    background-color: #fff;
-    -webkit-box-shadow: 0;
-    box-shadow: 0;
-    -webkit-appearance: none
+    background: none
 }
 
 .ath {
@@ -277,10 +274,6 @@ input[type=text]:focus {
 
 .ath img {
     margin-top: 12rem
-}
-
-.is-blur {
-    filter: blur(2px)
 }
 
 .is-hidden {
