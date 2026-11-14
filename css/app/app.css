@@ -33,97 +33,77 @@ body {
     background-color: var(--bg)
 }
 
+/* HEADER */
 header {
-    position: relative;
-    margin-top: 5px
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1.25rem 1rem
 }
 
-@media(orientation:landscape) {
-    header {
-        margin-top: 5px
-    }
-}
-
-header a {
-    display: inline-block;
-    text-decoration: none;
-    text-transform: capitalize;
-    color: #fff
+.brand {
+    display: flex;
+    align-items: center;
+    gap: .625rem;
+    font-size: 1.375rem;
+    letter-spacing: -.01em;
+    color: var(--text)
 }
 
 .logo {
-    height: 1.5rem;
-    margin: .9375rem 0 .9375rem .9375rem
+    height: 1.25rem
 }
 
+.nav-toggle {
+    display: flex;
+    float: none;
+    margin-right: -.75rem;
+    padding: .75rem;
+    color: var(--text)
+}
+
+/* MENU */
 nav {
-    display: block;
-    opacity: 1;
-    font-weight: 400;
     position: fixed;
     z-index: 10;
     top: 0;
     right: 0;
     width: 75%;
+    max-width: 20rem;
     height: 100%;
-    transition: opacity .35s ease, transform .35s ease;
-    transform: translateX(102%);
-    background: linear-gradient(#87DB48, #5CA724);
-    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.25)
+    transition: transform .35s ease;
+    transform: translateX(100%);
+    border-left: 1px solid var(--line);
+    background: var(--surface)
 }
 
 nav.open {
     overflow: auto;
-    transform: translateX(1rem)
-}
-
-@media(min-width: 666px) {
-    nav {
-        width: 40%
-    }
+    transform: translateX(0)
 }
 
 nav ol {
-    margin: 4rem 0 0;
-    padding: 0
-}
-
-nav li {
-    list-style: none
+    margin-top: 4.5rem
 }
 
 nav a {
     display: block;
-    margin: .5rem 0;
-    padding: 1rem 1rem;
-    transition: transform .35s ease
+    padding: 1rem 1.25rem;
+    font-size: 1.125rem;
+    color: var(--text);
+    border-bottom: 1px solid var(--line)
 }
 
-nav a:hover,
-nav a:active {
-    transform: translateX(.5rem)
+nav a:hover {
+    background: var(--hover)
 }
 
-nav.open a {
-    padding-left: 2rem
-}
-
-.nav-toggle {
-    font-size: 1.25rem;
+nav .close {
     position: absolute;
     top: 1rem;
-    right: 1rem;
-    float: right;
-    cursor: pointer
-}
-
-nav.open .nav-toggle {
-    font-size: 1.25rem;
-    position: absolute;
-    top: 1.5rem;
-    right: 2.3rem;
-    float: right;
-    cursor: pointer
+    right: 1.25rem;
+    font-size: 1.75rem;
+    line-height: 1
 }
 
 ul#list {
