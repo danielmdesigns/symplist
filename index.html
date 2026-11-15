@@ -15,6 +15,19 @@
 <link rel="icon" href="imgs/favicons/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="imgs/favicons/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="imgs/app-icons/apple-touch-icon.png?v=2026.1">
+<link rel="manifest" href="imgs/app-icons/manifest.json?v=2026.2">
+
+<!-- Add to Home Screen: open full screen, like an app -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Symplist">
+
+<!-- Opened from the Home Screen: skip the landing page, go straight to the list -->
+<script>
+if (navigator.standalone || matchMedia("(display-mode: standalone)").matches) {
+	location.replace("symplist.html");
+}
+</script>
 
 <!-- Link previews (iMessage, Slack, LinkedIn, X) -->
 <meta property="og:site_name" content="Symplist">
