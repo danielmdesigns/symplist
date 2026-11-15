@@ -31,14 +31,9 @@ body {
     padding: clamp(2.5rem, 8vw, 5rem) 1.25rem 0;
     overflow: hidden;
     text-align: center;
-    background: url("../../imgs/landing/background.jpg") center bottom / cover no-repeat
-}
-
-/* TALL SCREENS: SIZE THE GLOW TO THE WIDTH SO MORE OF IT SHOWS */
-@media (orientation: portrait) {
-    .hero {
-        background-size: 130% auto
-    }
+    background:
+        url("../../imgs/landing/top-glow.webp") center top / 100% 2rem no-repeat,
+        url("../../imgs/landing/background.jpg") center bottom / cover no-repeat
 }
 
 .brand {
