@@ -4,6 +4,7 @@
 :root {
     --bg: #000000;
     --text: #FDFDFD;
+    --text-muted: #A3A3A3;
     --button-text: #262626
 }
 
@@ -78,6 +79,21 @@ h1 {
 
 .button:hover {
     opacity: .9
+}
+
+.developer {
+    display: flex;
+    align-items: center;
+    gap: .375rem;
+    margin-top: 1.25rem;
+    font-size: .9375rem;
+    text-decoration: none;
+    color: var(--text-muted);
+    transition: color 200ms
+}
+
+.developer:hover {
+    color: var(--text)
 }
 
 .phone {
