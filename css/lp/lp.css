@@ -1,1 +1,86 @@
-*,*::after,*::before{margin:0;padding:0;list-style:none;text-decoration:none}body{font-family:"Roboto","Helvetica","Arial",sans-serif;font-weight:100;color:#444;background-color:#fff}.promoBar{font-size:16px;font-weight:300;padding:10px;text-align:center;color:#fff;background-color:#87DB48;box-shadow:0 0 12px 2px rgba(0,0,0,0.25)}.hide{height:0;padding:0;color:transparent}.container{margin:30px auto 0;padding:20px}header{display:block;width:100%;max-width:700px;margin:0 auto}.logo{display:none;height:60px}nav ul{clear:both;margin:40px 0}nav li{line-height:24px;text-align:center}nav li:hover{color:#ddd}nav li a{font-size:14px;font-weight:300;color:#87DB48}main{display:table;float:none;clear:both;width:100%;max-width:900px;margin:0 auto}.col-1,.col-2{display:block;width:100%}.col-2{margin:40px 0}.hero{display:block;width:100%;max-width:360px;margin:0 auto;text-align:center}h1{font-size:48px;font-weight:100;text-align:center}p{font-size:16px;font-weight:300;line-height:24px;margin:20px 0 30px 0;text-align:center;color:#999}.button{font-size:.875rem;font-weight:700;display:block;float:none;width:100%;margin:0 auto;padding:1rem 0;cursor:pointer;transition:background-color .35s ease,transform .35s ease;text-align:center;text-decoration:none;color:#fff;border:0;border-radius:4px;outline:none;background-color:#87DB48;box-shadow:0 0 1.25rem rgba(0,0,0,0.2)}@media(min-width: 450px){.button{width:100%;max-width:250px}}.button:hover{background-color:#79d733}.button:active{transform:scale(.9)}footer{text-align:center;margin-bottom:40px}@media (min-width: 600px){.logo{display:inline-block;margin:0 auto 20px}nav{float:right}nav ul{display:block;margin:1rem 0}nav li{display:inline-block;margin-top:0;padding-right:20px}nav li:last-of-type{padding-right:0}main{margin:40px auto}.col-1,.col-2{float:left;width:40%}.col-1{padding-left:20px}.col-2{margin-top:0;margin-left:40px}h1,p{text-align:left}.button{margin:0}}@media (min-width: 750px){.col-2{margin-top:30px}}
+/* SYMPLIST LANDING PAGE (DARK ONLY) */
+
+/* COLORS */
+:root {
+    --bg: #000000;
+    --text: #FDFDFD;
+    --button-text: #262626
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+body {
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+    color: var(--text);
+    background-color: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+/* ONE FULL-SCREEN SECTION, PHONE SITS ON THE BOTTOM EDGE */
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: 5rem 1.25rem 0;
+    overflow: hidden;
+    text-align: center;
+    background: url("../../imgs/landing/background.jpg") center bottom / cover no-repeat
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    font-size: clamp(2rem, 5vw, 2.75rem)
+}
+
+.brand svg {
+    width: auto;
+    height: .9em
+}
+
+h1 {
+    max-width: 14em;
+    margin-top: 1.5rem;
+    font-size: clamp(2.5rem, 7vw, 4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -.02em
+}
+
+.intro {
+    max-width: 30em;
+    margin-top: 1.25rem;
+    font-size: clamp(1.0625rem, 2vw, 1.375rem);
+    line-height: 1.4
+}
+
+.button {
+    margin-top: 2rem;
+    padding: .75rem 2.25rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--button-text);
+    background-color: var(--text);
+    border-radius: .375rem;
+    transition: opacity 200ms
+}
+
+.button:hover {
+    opacity: .9
+}
+
+.phone {
+    display: block;
+    width: min(23rem, 85vw);
+    margin-top: auto;
+    padding-top: 4rem
+}
