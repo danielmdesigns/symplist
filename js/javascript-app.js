@@ -2,7 +2,7 @@ $(document).ready(function(){
 "use strict";
 
 //HIDE PROMPTS ONLOAD
-$("#js-modal, #js-confirm, #js-undo").hide();
+$("#js-modal, #js-confirm, #js-homescreen, #js-undo").hide();
 
 //ANIMATION SPEED (MATCHES --speed IN app.css), OFF IF THE DEVICE ASKS FOR REDUCED MOTION
 var speed = 200;
@@ -201,6 +201,58 @@ $("#btnDelete").on("click", function(){
 	render();
 	hideUndo();
 	$("#js-confirm").fadeOut(speed);
+});
+
+//***** ADD TO HOME SCREEN REMINDER *****//
+//ONLY IN THE BROWSER ON PHONES AND TABLETS, NEVER WHEN OPENED FROM THE HOME SCREEN
+var installPrompt;
+var reminder = localStorage.getItem("homescreenReminder");
+var standalone = navigator.standalone || matchMedia("(display-mode: standalone)").matches;
+var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (/Mac/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+
+//ANDROID CHROME CAN SHOW ITS OWN INSTALL PROMPT. SAVE IT FOR THE ADD BUTTON
+window.addEventListener("beforeinstallprompt", function(event){
+	event.preventDefault();
+	installPrompt = event;
+});
+
+function showReminder(){
+	//WAIT IF ANOTHER DIALOG IS OPEN
+	if($(".modal:visible").length){
+		setTimeout(showReminder, 15000);
+		return;
+	}
+	$(".homescreen-ios").toggle(ios);
+	$(".homescreen-android").toggle(!ios && !installPrompt);
+	$("#btnLater").toggle(Boolean(installPrompt));
+	$("#btnInstall").text(installPrompt ? "Add" : "Got it");
+	$("#js-homescreen").fadeIn(speed);
+}
+
+//NOT NOW: ASK AGAIN IN 3 DAYS
+function remindLater(){
+	localStorage.setItem("homescreenReminder", Date.now() + 3 * 24 * 60 * 60 * 1000);
+	$("#js-homescreen").fadeOut(speed);
+}
+
+if(!standalone && matchMedia("(hover: none)").matches && reminder !== "off" && Date.now() > Number(reminder || 0)){
+	setTimeout(showReminder, 15000);
+}
+
+$("#btnInstall").on("click", function(){
+	if(installPrompt){
+		installPrompt.prompt();
+		installPrompt = null;
+	}
+	remindLater();
+});
+
+$("#btnLater").on("click", remindLater);
+
+//DON'T REMIND ME: NEVER SHOW IT AGAIN
+$("#btnNever").on("click", function(){
+	localStorage.setItem("homescreenReminder", "off");
+	$("#js-homescreen").fadeOut(speed);
 });
 
 //***** DARK MODE *****//

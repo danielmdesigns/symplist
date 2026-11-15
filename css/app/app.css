@@ -291,7 +291,7 @@ ul#list {
 }
 
 
-/* DIALOG */
+/* DIALOG (SITS HIGH SO THE PHONE KEYBOARD NEVER COVERS THE BUTTONS) */
 .modal {
     position: fixed;
     z-index: 20;
@@ -300,18 +300,10 @@ ul#list {
     bottom: 0;
     left: 0;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    padding: 1.25rem;
+    padding: 6rem 1.25rem 1.25rem;
     background-color: var(--scrim)
-}
-
-/* PHONES: SIT IN THE SPACE ABOVE THE KEYBOARD */
-@media (hover: none) {
-    .modal {
-        align-items: flex-start;
-        padding-top: 25vh
-    }
 }
 
 .modal__container {
@@ -338,6 +330,20 @@ ul#list {
     color: var(--text-muted)
 }
 
+.modal__steps {
+    margin-top: 1rem;
+    line-height: 1.5;
+    text-align: center
+}
+
+.modal__steps svg {
+    vertical-align: -.2em
+}
+
+.modal__steps strong {
+    font-weight: 600
+}
+
 .modal input {
     box-sizing: border-box;
     width: 100%;
@@ -362,6 +368,7 @@ ul#list {
 
 .modal__actions {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-end;
     gap: .5rem;
     margin-top: 1.25rem
@@ -377,6 +384,12 @@ ul#list {
 .btn-add {
     color: var(--bg);
     background-color: var(--text)
+}
+
+.btn-never {
+    margin-right: auto;
+    padding-left: 0;
+    color: var(--text-muted)
 }
 
 .btn-danger {
