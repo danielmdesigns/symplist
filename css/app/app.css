@@ -177,8 +177,9 @@ ul#list {
     color: var(--text)
 }
 
-/* UNDO */
-.undo {
+/* UNDO AND HOME SCREEN BANNER (SAME SPOT ABOVE ADD ITEM) */
+.undo,
+.banner {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -201,6 +202,34 @@ ul#list {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis
+}
+
+.banner {
+    justify-content: flex-start;
+    gap: .75rem;
+    padding: .625rem .75rem .625rem 1rem
+}
+
+.banner__text {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+
+.banner__btn {
+    padding: .375rem .875rem;
+    font-size: .875rem;
+    font-weight: 600;
+    border-radius: 999px;
+    background-color: var(--hover)
+}
+
+.banner__close {
+    display: flex;
+    padding: .25rem;
+    color: var(--text-muted)
 }
 
 .undo__btn {
