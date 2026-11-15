@@ -2,7 +2,7 @@ $(document).ready(function(){
 "use strict";
 
 //HIDE PROMPTS ONLOAD
-$("#js-modal, #js-confirm, #js-homescreen, #js-undo").hide();
+$("#js-modal, #js-confirm, #js-homescreen, #js-undo, #js-banner").hide();
 
 //ANIMATION SPEED (MATCHES --speed IN app.css), OFF IF THE DEVICE ASKS FOR REDUCED MOTION
 var speed = 200;
@@ -155,6 +155,7 @@ var removed, undoTimer;
 //SHOW "ITEM REMOVED · UNDO" FOR 5s
 function showUndo(item, index){
 	removed = { item: item, index: index, list: current };
+	$("#js-banner").hide();
 	$(".undo__text").text(item + " removed");
 	$("#js-undo").stop(true, true).fadeIn(speed);
 	clearTimeout(undoTimer);
@@ -203,56 +204,53 @@ $("#btnDelete").on("click", function(){
 	$("#js-confirm").fadeOut(speed);
 });
 
-//***** ADD TO HOME SCREEN REMINDER *****//
+//***** ADD TO HOME SCREEN BANNER *****//
 //ONLY IN THE BROWSER ON PHONES AND TABLETS, NEVER WHEN OPENED FROM THE HOME SCREEN
 var installPrompt;
 var reminder = localStorage.getItem("homescreenReminder");
 var standalone = navigator.standalone || matchMedia("(display-mode: standalone)").matches;
 var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (/Mac/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
 
-//ANDROID CHROME CAN SHOW ITS OWN INSTALL PROMPT. SAVE IT FOR THE ADD BUTTON
+//ANDROID CHROME CAN SHOW ITS OWN INSTALL PROMPT. SAVE IT FOR THE HOW BUTTON
 window.addEventListener("beforeinstallprompt", function(event){
 	event.preventDefault();
 	installPrompt = event;
 });
 
-function showReminder(){
-	//WAIT IF ANOTHER DIALOG IS OPEN
-	if($(".modal:visible").length){
-		setTimeout(showReminder, 15000);
-		return;
-	}
-	$(".homescreen-ios").toggle(ios);
-	$(".homescreen-android").toggle(!ios && !installPrompt);
-	$("#btnLater").toggle(Boolean(installPrompt));
-	$("#btnInstall").text(installPrompt ? "Add" : "Got it");
-	$("#js-homescreen").fadeIn(speed);
+//SHOW THE BANNER RIGHT AWAY (UNLESS SNOOZED OR TURNED OFF)
+if(!standalone && matchMedia("(hover: none)").matches && reminder !== "off" && Date.now() > Number(reminder || 0)){
+	setTimeout(function(){
+		$("#js-banner").fadeIn(speed);
+	}, 1500);
 }
 
-//NOT NOW: ASK AGAIN IN 3 DAYS
+//ASK AGAIN IN 3 DAYS
 function remindLater(){
 	localStorage.setItem("homescreenReminder", Date.now() + 3 * 24 * 60 * 60 * 1000);
-	$("#js-homescreen").fadeOut(speed);
+	$("#js-banner, #js-homescreen").fadeOut(speed);
 }
 
-if(!standalone && matchMedia("(hover: none)").matches && reminder !== "off" && Date.now() > Number(reminder || 0)){
-	setTimeout(showReminder, 15000);
-}
-
-$("#btnInstall").on("click", function(){
+//HOW: ANDROID OPENS ITS INSTALL PROMPT, EVERYONE ELSE GETS THE STEPS
+$("#btnHow").on("click", function(event){
+	event.stopPropagation();
 	if(installPrompt){
 		installPrompt.prompt();
 		installPrompt = null;
+		remindLater();
+		return;
 	}
-	remindLater();
+	$("nav").removeClass("open");
+	$(".homescreen-ios").toggle(ios);
+	$(".homescreen-android").toggle(!ios);
+	$("#js-homescreen").fadeIn(speed);
 });
 
-$("#btnLater").on("click", remindLater);
+$("#btnBannerClose, #btnGotIt").on("click", remindLater);
 
 //DON'T REMIND ME: NEVER SHOW IT AGAIN
 $("#btnNever").on("click", function(){
 	localStorage.setItem("homescreenReminder", "off");
-	$("#js-homescreen").fadeOut(speed);
+	$("#js-banner, #js-homescreen").fadeOut(speed);
 });
 
 //***** DARK MODE *****//
