@@ -150,12 +150,15 @@ $("#list").on("click", "li", function(){
 });
 
 //***** UNDO *****//
-var removed, undoTimer;
+var removed, undoTimer, bannerWaiting;
 
 //SHOW "ITEM REMOVED · UNDO" FOR 5s
 function showUndo(item, index){
 	removed = { item: item, index: index, list: current };
-	$("#js-banner").hide();
+	if($("#js-banner").is(":visible")){
+		bannerWaiting = true;
+		$("#js-banner").hide();
+	}
 	$(".undo__text").text(item + " removed");
 	$("#js-undo").stop(true, true).fadeIn(speed);
 	clearTimeout(undoTimer);
@@ -164,7 +167,13 @@ function showUndo(item, index){
 
 function hideUndo(){
 	clearTimeout(undoTimer);
-	$("#js-undo").fadeOut(speed);
+	$("#js-undo").fadeOut(speed, function(){
+		//BRING BACK THE HOME SCREEN BANNER IF IT WAS STEPPING ASIDE
+		if(bannerWaiting){
+			bannerWaiting = false;
+			$("#js-banner").fadeIn(speed);
+		}
+	});
 }
 
 //PUT THE ITEM BACK WHERE IT WAS (EVEN IF ANOTHER TAB IS OPEN)
@@ -204,54 +213,73 @@ $("#btnDelete").on("click", function(){
 	$("#js-confirm").fadeOut(speed);
 });
 
-//***** ADD TO HOME SCREEN BANNER *****//
+//***** ADD TO HOME SCREEN BANNER AND REMINDER *****//
 //ONLY IN THE BROWSER ON PHONES AND TABLETS, NEVER WHEN OPENED FROM THE HOME SCREEN
+//SAVED STATE: (NOTHING) = SHOW THE BANNER, "banner-closed" = REMIND AFTER 5s EACH VISIT, "off" = NEVER
 var installPrompt;
 var reminder = localStorage.getItem("homescreenReminder");
 var standalone = navigator.standalone || matchMedia("(display-mode: standalone)").matches;
 var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (/Mac/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
 
-//ANDROID CHROME CAN SHOW ITS OWN INSTALL PROMPT. SAVE IT FOR THE HOW BUTTON
+if(!standalone && matchMedia("(hover: none)").matches){
+	if(!reminder){
+		$("#js-banner").show();
+	}
+	if(reminder === "banner-closed"){
+		setTimeout(showSteps, 5000);
+	}
+}
+
+//ANDROID CHROME CAN SHOW ITS OWN INSTALL PROMPT. SAVE IT FOR THE BUTTONS
 window.addEventListener("beforeinstallprompt", function(event){
 	event.preventDefault();
 	installPrompt = event;
 });
 
-//SHOW THE BANNER RIGHT AWAY (UNLESS SNOOZED OR TURNED OFF)
-if(!standalone && matchMedia("(hover: none)").matches && reminder !== "off" && Date.now() > Number(reminder || 0)){
-	setTimeout(function(){
-		$("#js-banner").fadeIn(speed);
-	}, 1500);
-}
+//ANDROID TELLS US WHEN IT'S INSTALLED: STOP ASKING
+window.addEventListener("appinstalled", turnOff);
 
-//ASK AGAIN IN 3 DAYS
-function remindLater(){
-	localStorage.setItem("homescreenReminder", Date.now() + 3 * 24 * 60 * 60 * 1000);
+function turnOff(){
+	localStorage.setItem("homescreenReminder", "off");
 	$("#js-banner, #js-homescreen").fadeOut(speed);
 }
 
-//HOW: ANDROID OPENS ITS INSTALL PROMPT, EVERYONE ELSE GETS THE STEPS
-$("#btnHow").on("click", function(event){
-	event.stopPropagation();
-	if(installPrompt){
-		installPrompt.prompt();
-		installPrompt = null;
-		remindLater();
+//THE STEPS DIALOG (FROM HOW, OR THE 5s REMINDER)
+function showSteps(){
+	//WAIT IF ANOTHER DIALOG IS OPEN
+	if($(".modal:visible").length){
+		setTimeout(showSteps, 5000);
 		return;
 	}
 	$("nav").removeClass("open");
 	$(".homescreen-ios").toggle(ios);
-	$(".homescreen-android").toggle(!ios);
+	$(".homescreen-android").toggle(!ios && !installPrompt);
+	$("#btnGotIt").text(installPrompt ? "Add" : "Got it");
 	$("#js-homescreen").fadeIn(speed);
+}
+
+$("#btnHow").on("click", function(event){
+	event.stopPropagation();
+	showSteps();
 });
 
-$("#btnBannerClose, #btnGotIt").on("click", remindLater);
-
-//DON'T REMIND ME: NEVER SHOW IT AGAIN
-$("#btnNever").on("click", function(){
-	localStorage.setItem("homescreenReminder", "off");
-	$("#js-banner, #js-homescreen").fadeOut(speed);
+//GOT IT CLOSES FOR NOW. ON ANDROID IT'S "ADD" AND OPENS THE INSTALL PROMPT
+$("#btnGotIt").on("click", function(){
+	if(installPrompt){
+		installPrompt.prompt();
+		installPrompt = null;
+	}
+	$("#js-homescreen").fadeOut(speed);
 });
+
+//× ON THE BANNER: HIDE IT FOR GOOD, SWITCH TO THE 5s REMINDER ON LATER VISITS
+$("#btnBannerClose").on("click", function(){
+	localStorage.setItem("homescreenReminder", "banner-closed");
+	$("#js-banner").fadeOut(speed);
+});
+
+//DON'T REMIND ME: NO BANNER, NO REMINDER
+$("#btnNever").on("click", turnOff);
 
 //***** DARK MODE *****//
 $("#js-theme").on("click", function(){
