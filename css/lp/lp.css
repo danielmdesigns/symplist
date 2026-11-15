@@ -81,19 +81,23 @@ h1 {
     opacity: .9
 }
 
-.developer {
-    display: flex;
-    align-items: center;
-    gap: .375rem;
+.credit {
     margin-top: 1.25rem;
     font-size: .9375rem;
-    text-decoration: none;
-    color: var(--text-muted);
-    transition: color 200ms
+    color: var(--text-muted)
 }
 
-.developer:hover {
-    color: var(--text)
+.credit a {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    color: var(--text);
+    text-decoration: none;
+    transition: opacity 200ms
+}
+
+.credit a:hover {
+    opacity: .8
 }
 
 .phone {
