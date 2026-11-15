@@ -34,6 +34,13 @@ body {
     background: url("../../imgs/landing/background.jpg") center bottom / cover no-repeat
 }
 
+/* TALL SCREENS: SIZE THE GLOW TO THE WIDTH SO MORE OF IT SHOWS */
+@media (orientation: portrait) {
+    .hero {
+        background-size: 130% auto
+    }
+}
+
 .brand {
     display: flex;
     align-items: center;
