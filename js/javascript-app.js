@@ -159,7 +159,7 @@ function showUndo(item, index){
 		bannerWaiting = true;
 		$("#js-banner").hide();
 	}
-	$(".undo__text").text(item + " removed");
+	$(".undo__text").text("Removed " + item);
 	$("#js-undo").stop(true, true).fadeIn(speed);
 	clearTimeout(undoTimer);
 	undoTimer = setTimeout(hideUndo, 5000);
